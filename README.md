@@ -45,7 +45,7 @@ npm install
 
 3. Set up environment variables:
 ```bash
-cp .env.local.example .env.local
+cp .env.example .env.local
 ```
 
 Edit `.env.local` and configure your API URL:
@@ -59,6 +59,29 @@ npm run dev
 ```
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 🚀 Deployment
+
+### Quick Deploy to Vercel
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Dragonchido/Frontend-chiro-store&env=NEXT_PUBLIC_API_URL&envDescription=VirtuSIM%20Backend%20API%20URL&envLink=https://github.com/Dragonchido/Frontend-chiro-store%23environment-variables)
+
+### Manual Deployment
+
+1. **Fork this repository** to your GitHub account
+2. **Connect to Vercel**:
+   - Go to [vercel.com](https://vercel.com)
+   - Click "New Project"
+   - Import your forked repository
+3. **Configure Environment Variables**:
+   - Add `NEXT_PUBLIC_API_URL` with value: `https://minatoz997-chirostore.hf.space`
+4. **Deploy!** - Vercel will automatically build and deploy your app
+
+### Environment Variables for Production
+
+```env
+NEXT_PUBLIC_API_URL=https://minatoz997-chirostore.hf.space
+```
 
 ## API Integration
 
