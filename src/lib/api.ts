@@ -8,7 +8,9 @@ import {
   HealthCheck 
 } from '@/types'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://minatoz997-chirostore.hf.space'
+import { ENV } from './env'
+
+const API_BASE_URL = ENV.API_URL
 
 class ApiService {
   private async request<T>(

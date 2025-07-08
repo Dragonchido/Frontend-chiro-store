@@ -1,15 +1,29 @@
 'use client'
 
-import { useState, Suspense } from 'react'
+import { useState } from 'react'
+import dynamic from 'next/dynamic'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { ServicesGrid } from '@/components/services-grid'
-import { OrderForm } from '@/components/order-form'
-import { OrdersList } from '@/components/orders-list'
 import { LoadingSpinner } from '@/components/loading-spinner'
 import { Service, OperatorType } from '@/types'
 import { Phone, ShoppingCart, List, TrendingUp, Zap, Shield, Clock } from 'lucide-react'
+
+// Dynamic imports to prevent hydration issues
+const ServicesGrid = dynamic(() => import('@/components/services-grid').then(mod => ({ default: mod.ServicesGrid })), {
+  loading: () => <LoadingSpinner text="Loading services..." />,
+  ssr: false
+})
+
+const OrderForm = dynamic(() => import('@/components/order-form').then(mod => ({ default: mod.OrderForm })), {
+  loading: () => <LoadingSpinner text="Loading form..." />,
+  ssr: false
+})
+
+const OrdersList = dynamic(() => import('@/components/orders-list').then(mod => ({ default: mod.OrdersList })), {
+  loading: () => <LoadingSpinner text="Loading orders..." />,
+  ssr: false
+})
 
 export default function Home() {
   const [selectedService, setSelectedService] = useState<Service | null>(null)
@@ -139,17 +153,13 @@ export default function Home() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Suspense fallback={<LoadingSpinner text="Loading services..." />}>
-                    <ServicesGrid onOrderService={handleOrderService} />
-                  </Suspense>
+                  <ServicesGrid onOrderService={handleOrderService} />
                 </CardContent>
               </Card>
             </TabsContent>
 
             <TabsContent value="orders" className="mt-8">
-              <Suspense fallback={<LoadingSpinner text="Loading orders..." />}>
-                <OrdersList />
-              </Suspense>
+              <OrdersList />
             </TabsContent>
           </Tabs>
         )}
