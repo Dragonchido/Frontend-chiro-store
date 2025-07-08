@@ -39,8 +39,9 @@ export function OrderForm({ service, operator, onOrderComplete, onCancel }: Orde
       } else {
         setError(response.message || 'Failed to create order')
       }
-    } catch {
-      setError('Failed to create order')
+    } catch (err) {
+      console.error('Error creating order:', err)
+      setError('Failed to connect to server')
     } finally {
       setLoading(false)
     }

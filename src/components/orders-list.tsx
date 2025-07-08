@@ -23,16 +23,19 @@ export function OrdersList() {
   const loadOrders = async () => {
     try {
       setLoading(true)
+      setError(null)
       const response = await apiService.getActiveOrders()
       
       if (response.success && response.data) {
         setOrders(Array.isArray(response.data) ? response.data : [])
-        setError(null)
       } else {
         setError(response.message || 'Failed to load orders')
+        setOrders([]) // Set empty array on error
       }
-    } catch {
-      setError('Failed to load orders')
+    } catch (err) {
+      console.error('Error loading orders:', err)
+      setError('Failed to connect to server')
+      setOrders([]) // Set empty array on error
     } finally {
       setLoading(false)
     }

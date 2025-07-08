@@ -1,12 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ServicesGrid } from '@/components/services-grid'
 import { OrderForm } from '@/components/order-form'
 import { OrdersList } from '@/components/orders-list'
+import { LoadingSpinner } from '@/components/loading-spinner'
 import { Service, OperatorType } from '@/types'
 import { Phone, ShoppingCart, List, TrendingUp, Zap, Shield, Clock } from 'lucide-react'
 
@@ -138,13 +139,17 @@ export default function Home() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ServicesGrid onOrderService={handleOrderService} />
+                  <Suspense fallback={<LoadingSpinner text="Loading services..." />}>
+                    <ServicesGrid onOrderService={handleOrderService} />
+                  </Suspense>
                 </CardContent>
               </Card>
             </TabsContent>
 
             <TabsContent value="orders" className="mt-8">
-              <OrdersList />
+              <Suspense fallback={<LoadingSpinner text="Loading orders..." />}>
+                <OrdersList />
+              </Suspense>
             </TabsContent>
           </Tabs>
         )}
