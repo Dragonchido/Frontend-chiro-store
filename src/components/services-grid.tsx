@@ -27,16 +27,19 @@ export function ServicesGrid({ onOrderService }: ServicesGridProps) {
   const loadServices = async () => {
     try {
       setLoading(true)
+      setError(null)
       const response = await apiService.getServices()
       
       if (response.success && response.data?.data) {
         setServices(response.data.data)
-        setError(null)
       } else {
         setError(response.message || 'Failed to load services')
+        setServices([]) // Set empty array on error
       }
-    } catch {
-      setError('Failed to load services')
+    } catch (err) {
+      console.error('Error loading services:', err)
+      setError('Failed to connect to server')
+      setServices([]) // Set empty array on error
     } finally {
       setLoading(false)
     }
